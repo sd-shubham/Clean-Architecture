@@ -1,6 +1,6 @@
 ﻿namespace App.Application.Enums
 {
-    public enum RoleType
+    internal enum RoleType
     {
         Admin,
         Approver,

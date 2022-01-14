@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using App.Application.Helper;
+﻿using App.Application.Helper;
 using App.Application.Interfaces;
 using App.Domain.Enities;
 using MediatR;
+using System.Net;
 
 namespace App.Application.Services
 {
@@ -31,8 +31,8 @@ namespace App.Application.Services
             };
              _userRepository.Add(user);
            bool isSave = await _userRepository.SaveChangesAsync(cancellationToken) > 0;
-            if (!isSave) return new Response<string>("failed to register user");
-          return new Response<string>("account created successfully",$"welcome {user.UserName}");
+            if (!isSave) return new Response<string>("failed to register user",HttpStatusCode.BadRequest);
+          return new Response<string>("account created successfully",$"welcome {user.UserName}",HttpStatusCode.Created);
         }
     }
 }

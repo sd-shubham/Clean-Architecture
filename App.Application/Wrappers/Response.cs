@@ -11,11 +11,12 @@ namespace App.Application
             Errors = new List<string> { message };
             StatusCode = statusCode;
         }
-        public Response(T data, string message = "success")
+        public Response(T data, string message = "success", HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             IsSuccess = true;
             Result = data;
             Message = message;
+            StatusCode = statusCode;
         }
         public bool IsSuccess { get; init; }
         public string Message { get; init; } = string.Empty;

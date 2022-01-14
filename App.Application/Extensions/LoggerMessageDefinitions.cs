@@ -17,7 +17,7 @@ namespace App.Application.Extensions
             return LoggerMessage.Define(LogLevel.Information,0,message);
         }
     }
-    public static class LoggerExtension
+    internal static class LoggerExtension
     {
         public static void LogEx<T1, T2>(this ILogger logger, T1 t1, T2 t2, string message)
         {

@@ -8,7 +8,7 @@ using MimeKit;
 
 namespace App.Api.Services
 {
-    public class EmailService : IMailService
+    internal class EmailService : IMailService
     {
         // configure mailsettings and mailrequest according to your need.
         private readonly MailSettings _mailSettings;

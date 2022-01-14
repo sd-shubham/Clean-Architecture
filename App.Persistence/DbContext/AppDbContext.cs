@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace App.Persistence
 {
-    public class AppDbContext: DbContext
+    internal class AppDbContext: DbContext
     {
         private readonly IDateTime _dateTime;
         private readonly ICurrentUserService _currentUserService;

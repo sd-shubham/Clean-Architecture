@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Persistence.Repositories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly AppDbContext _dbContext;
         public UserRepository(AppDbContext dbContext) : base(dbContext)
