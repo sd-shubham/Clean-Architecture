@@ -17,7 +17,7 @@ namespace App.Persistence.Repositories
             {
                 Id = x.Id,
                 UserName = x.UserName
-            }).ToListAsync(cancellationToken);
+            }).AsNoTracking().ToListAsync(cancellationToken);
             return Users;
 
         }

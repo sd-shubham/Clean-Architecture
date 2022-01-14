@@ -17,7 +17,7 @@ namespace App.Persistence.Repositories
         public int SaveChanges() => _dbContext.SaveChanges();
         public virtual async Task<IReadOnlyCollection<Entity>> GetAsync(CancellationToken cancellationToken)
 
-              => await EntitySet.ToListAsync(cancellationToken);
+              => await EntitySet.AsNoTracking().ToListAsync(cancellationToken);
         public async Task AddAsync(Entity entity) => await EntitySet.AddAsync(entity);
         public async Task<Entity> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken)
        
