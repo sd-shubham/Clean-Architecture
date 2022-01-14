@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using App.Application.Interfaces;
 using MediatR;
+using App.Application.Dtos;
 
 namespace App.Application.Services
 {

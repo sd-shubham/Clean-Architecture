@@ -2,6 +2,7 @@
 using App.Application.Interfaces;
 using MediatR;
 using System.Net;
+using App.Application.Dtos;
 
 namespace App.Application.Services
 {

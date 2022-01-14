@@ -5,7 +5,7 @@ namespace App.Application.Helper
     internal static class ApplicationHelper
     {
 
-        public static IReadOnlyDictionary<Bank, String> Banks = new Dictionary<Bank, String>
+        public static IReadOnlyDictionary<Bank, string> Banks = new Dictionary<Bank, string>
         {
             [Bank.ICICI] = "Some bank code"
         };

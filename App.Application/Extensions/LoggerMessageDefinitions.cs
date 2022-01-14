@@ -12,6 +12,10 @@ namespace App.Application.Extensions
         {
             return LoggerMessage.Define<T1>(LogLevel.Information, 0, message);
         }
+        public static Action<ILogger,Exception?>Log(string message)
+        {
+            return LoggerMessage.Define(LogLevel.Information,0,message);
+        }
     }
     public static class LoggerExtension
     {
@@ -24,6 +28,11 @@ namespace App.Application.Extensions
         {
             var logAction = LoggerMessageDefinitions.Log<T1>(message);
             logAction(logger, t1, null);
+        }
+        public static void LogEx(this ILogger logger, string message)
+        {
+            var logAction = LoggerMessageDefinitions.Log(message);
+            logAction(logger, null);
         }
     }
 }

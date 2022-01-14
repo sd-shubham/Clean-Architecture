@@ -1,4 +1,4 @@
-﻿namespace App.Application.Services
+﻿namespace App.Application.Dtos
 {
    public record GetUserDto(int Id,string UserName);
 }
