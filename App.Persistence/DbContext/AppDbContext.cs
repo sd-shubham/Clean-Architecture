@@ -1,5 +1,6 @@
 ﻿using App.Application.Interfaces;
 using App.Domain.Enities;
+using App.Persistence.Converter;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -48,6 +49,12 @@ namespace App.Persistence
         {
             configurationBuilder.Properties<string>().HaveColumnType("nvarchar(200)");
             configurationBuilder.Properties<decimal>().HavePrecision(14,2);
+            configurationBuilder.Properties<DateOnly>()
+                                 .HaveConversion<DateOnlyConverter>()
+                                 .HaveColumnType("date");
+            configurationBuilder.Properties<TimeOnly>()
+                                .HaveConversion<TimeOnlyConverter>()
+                                .HaveColumnType("time");
             base.ConfigureConventions(configurationBuilder);
         }
     }

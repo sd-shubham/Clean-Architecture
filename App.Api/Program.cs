@@ -1,3 +1,4 @@
+using App.Api.Converter;
 using App.Api.Middlewares;
 using App.Api.Services;
 using App.Application;
@@ -13,13 +14,19 @@ builder.Services.AddPersistence();
 builder.Services.AddApplication();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-builder.Services.AddTransient<IMailService,EmailService>();
+builder.Services.AddTransient<IMailService, EmailService>();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new FluentErrorValidationAttribute());
+}).AddJsonOptions(option =>
+{
+    // adding datetime and timeonly json converte
+    // not supported by default.
+    option.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    option.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
 });
 var mailConfig = builder.Configuration.GetSection("MailSettings");
- builder.Services.Configure<MailSettings>(mailConfig);
+builder.Services.Configure<MailSettings>(mailConfig);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -24,7 +24,7 @@ namespace App.Application.Services
         {
             var user = await _userRepository.SingleOrDefaultAsync(x => x.Id == request.Id,cancellationToken);
             if (user is null) return new Response<GetUserDto>("user not found",HttpStatusCode.NotFound);
-           return new Response<GetUserDto>(_mapper.Map<GetUserDto>(user));
+            return new Response<GetUserDto>(_mapper.Map<GetUserDto>(user));
         }
     }
 }

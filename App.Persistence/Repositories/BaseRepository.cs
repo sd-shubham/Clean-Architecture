@@ -15,25 +15,22 @@ namespace App.Persistence.Repositories
         public void Add(Entity entity) => EntitySet.Add(entity);
         public void Update(Entity entity) => EntitySet.Update(entity);
         public int SaveChanges() => _dbContext.SaveChanges();
-
-
         public virtual async Task<IReadOnlyCollection<Entity>> GetAsync(CancellationToken cancellationToken)
 
               => await EntitySet.ToListAsync(cancellationToken);
-
         public async Task AddAsync(Entity entity) => await EntitySet.AddAsync(entity);
-        public async Task<Entity> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken = default)
-        {
-            return await EntitySet.FirstOrDefaultAsync(expression, cancellationToken);
-        }
-        public async Task<Entity> SingleOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken = default)
-        {
-            return await EntitySet.SingleOrDefaultAsync(expression, cancellationToken);
-        }
+        public async Task<Entity> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken)
+       
+            => await EntitySet.FirstOrDefaultAsync(expression, cancellationToken);
+      
+        public async Task<Entity> SingleOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken)
+
+            => await EntitySet.SingleOrDefaultAsync(expression, cancellationToken);
+
         public async Task<bool> AnyAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken)
-        {
-            return await EntitySet.AnyAsync(expression, cancellationToken);
-        }
+
+          => await EntitySet.AnyAsync(expression, cancellationToken);
+
         public async Task<int> SaveChangesAsync(CancellationToken token = new CancellationToken())
             => await _dbContext.SaveChangesAsync(token);
 

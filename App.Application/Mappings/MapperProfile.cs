@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using App.Application.Services;
 using App.Domain.Enities;
+using App.Application.Dtos;
 
 namespace App.Application.Mappings
 {
