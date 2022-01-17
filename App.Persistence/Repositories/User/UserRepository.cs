@@ -1,10 +1,12 @@
 ﻿using App.Application.Interfaces;
+using App.Domain;
 using App.Domain.Enities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Persistence.Repositories
 {
-    internal class UserRepository : BaseRepository<User>, IUserRepository
+    [Injectable]
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly AppDbContext _dbContext;
         public UserRepository(AppDbContext dbContext) : base(dbContext)

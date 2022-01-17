@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace App.Persistence
 {
-    internal class AppDbContext: DbContext
+    public class AppDbContext: DbContext
     {
         private readonly IDateTime _dateTime;
         private readonly ICurrentUserService _currentUserService;
@@ -17,6 +17,7 @@ namespace App.Persistence
             _currentUserService = currentUserService;
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Account> Account { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entity in ChangeTracker.Entries<BaseEntity>())

@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace App.Application.Behaviours
 {
-    internal class AppLoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class AppLoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly ILogger<AppLoggingBehaviour<TRequest, TResponse>> _logger;

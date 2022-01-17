@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 #nullable disable
 namespace App.Persistence.Repositories
 {
-    internal class BaseRepository<Entity> : IBaseRepository<Entity> where Entity : class
+    public class BaseRepository<Entity> : IBaseRepository<Entity> where Entity : class
     {
         private readonly AppDbContext _dbContext;
         private DbSet<Entity> EntitySet => _dbContext.Set<Entity>();

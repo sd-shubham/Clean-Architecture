@@ -1,9 +1,12 @@
 using App.Application.Interfaces;
+using App.Domain;
+using App.Persistence.Repositories;
 using App.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Scrutor;
 using System.Reflection;
 
 namespace App.Persistence
@@ -12,7 +15,7 @@ namespace App.Persistence
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            // for testing -using inmemmory
+            // for testing -
             //services.AddDbContext<AppDbContext>(options =>
             //{
             //    options.UseInMemoryDatabase("InMemory")
@@ -20,25 +23,30 @@ namespace App.Persistence
             //    .EnableSensitiveDataLogging();
             //});
             services.AddDbContext<AppDbContext>(option =>
-            {
-                option.UseSqlServer(configuration.GetConnectionString("AppDbContext"));
-            });
+
+                option.UseSqlServer(
+                     configuration.GetConnectionString("AppDbContext"),
+                     b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+                     ).LogTo(Console.WriteLine, LogLevel.Debug)
+                      .EnableSensitiveDataLogging()
+                     );
             //services.AddDbContext<ForexTradingDbContext>(options => {
             //    options.UseNpgsql("your connect string here");
             //});
             services.AddTransient<IDateTime, DateTimeService>();
-            // register all repos dynamically.
-            services.Scan(x =>
-            {
-                var entryAssembly = Assembly.GetEntryAssembly();
-                var referencedAssembly = entryAssembly?.GetReferencedAssemblies().Select(Assembly.Load)!;
-                var assemblies = new List<Assembly> { entryAssembly! }.Concat(referencedAssembly);
-                x.FromAssemblies(assemblies).AddClasses(
-                    classes => classes.AssignableTo(typeof(IBaseRepository<>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime();
 
-            });
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            var assembly = Assembly.LoadFrom(
+                $"{Path.GetDirectoryName(typeof(AppDbContext).Assembly.Location)}\\App.Persistence.dll");
+            services.Scan(scan =>
+                scan.FromAssemblies(assembly)
+                    .AddClasses(classes => classes.WithAttribute<Injectable>(), true)
+                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime()
+                    );
+
         }
     }
 }
