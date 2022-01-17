@@ -1,6 +1,7 @@
 using App.Application.Interfaces;
 using App.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
@@ -9,16 +10,19 @@ namespace App.Persistence
 {
     public static class ServiceRegistration
     {
-        public static void AddPersistence(this IServiceCollection services)
+        public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             // for testing -using inmemmory
-            services.AddDbContext<AppDbContext>(options =>
+            //services.AddDbContext<AppDbContext>(options =>
+            //{
+            //    options.UseInMemoryDatabase("InMemory")
+            //    .LogTo(Console.WriteLine,LogLevel.Information)
+            //    .EnableSensitiveDataLogging();
+            //});
+            services.AddDbContext<AppDbContext>(option =>
             {
-                options.UseInMemoryDatabase("InMemory")
-                .LogTo(Console.WriteLine,LogLevel.Information)
-                .EnableSensitiveDataLogging();
+                option.UseSqlServer(configuration.GetConnectionString("AppDbContext"));
             });
-
             //services.AddDbContext<ForexTradingDbContext>(options => {
             //    options.UseNpgsql("your connect string here");
             //});
