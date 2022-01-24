@@ -48,6 +48,7 @@ namespace App.Persistence
         }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
+            // default config for all entity
             configurationBuilder.Properties<string>().HaveColumnType("nvarchar(200)");
             configurationBuilder.Properties<decimal>().HavePrecision(14,2);
             configurationBuilder.Properties<DateOnly>()

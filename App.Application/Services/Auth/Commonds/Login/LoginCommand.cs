@@ -6,12 +6,7 @@ using System.Net;
 
 namespace App.Application.Services
 {
-    public class LoginCommand:IRequest<Response<AuthResponseModel>>
-    {
-        public string UserName { get; init;}
-        public string Password { get; init;}
-
-    }
+    public record LoginCommand(string UserName, string Password) :IRequest<Response<AuthResponseModel>>;
     internal class LoginHanler : IRequestHandler<LoginCommand, Response<AuthResponseModel>>
     {
         private readonly IUserRepository _userRepository;

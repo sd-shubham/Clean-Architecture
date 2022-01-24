@@ -5,9 +5,7 @@ using App.Application.Dtos;
 
 namespace App.Application.Services
 {
-    public class GetAllUserQuery:IRequest<Response<IReadOnlyCollection<GetUserDto>>>
-    {
-    }
+    public record GetAllUserQuery:IRequest<Response<IReadOnlyCollection<GetUserDto>>>;
     internal class GetAllUserHandler : IRequestHandler<GetAllUserQuery, Response<IReadOnlyCollection<GetUserDto>>>
     {
         private readonly IUserRepository _userRepository;

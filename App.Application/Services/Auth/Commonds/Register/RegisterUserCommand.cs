@@ -1,4 +1,5 @@
-﻿using App.Application.Helper;
+﻿using App.Application.Exceptions;
+using App.Application.Helper;
 using App.Application.Interfaces;
 using App.Domain.Enities;
 using MediatR;
@@ -6,12 +7,7 @@ using System.Net;
 
 namespace App.Application.Services
 {
-    public class RegisterUserCommand : IRequest<Response<string>>
-    {
-        public string UserName { get; init; }
-        public string Password { get; init; }
-    }
-
+    public record RegisterUserCommand(string UserName, string Password) : IRequest<Response<string>>;
     internal class Handler : IRequestHandler<RegisterUserCommand, Response<string>>
     {
         private readonly IUserRepository _userRepository;
@@ -31,8 +27,8 @@ namespace App.Application.Services
             };
              _userRepository.Add(user);
            bool isSave = await _userRepository.SaveChangesAsync(cancellationToken) > 0;
-            if (!isSave) return new Response<string>("failed to register user",HttpStatusCode.BadRequest);
-          return new Response<string>("account created successfully",$"welcome {user.UserName}",HttpStatusCode.Created);
+            if (!isSave) return Error<string>.BadRequest("failed to register user");
+          return new Response<string>("account created successfully",HttpStatusCode.Created, $"welcome {user.UserName}");
         }
     }
 }

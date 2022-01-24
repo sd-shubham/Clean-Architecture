@@ -30,6 +30,18 @@ namespace App.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Account");
@@ -84,7 +96,9 @@ namespace App.Persistence.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("CurrencyCode")
-                                .HasColumnType("nvarchar(200)")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("nvarchar(3)")
                                 .HasColumnName("CurrencyCode");
 
                             b1.HasKey("AccountId");
@@ -95,7 +109,8 @@ namespace App.Persistence.Migrations
                                 .HasForeignKey("AccountId");
                         });
 
-                    b.Navigation("Currency");
+                    b.Navigation("Currency")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

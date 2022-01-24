@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220117144415_Initial")]
-    partial class Initial
+    [Migration("20220118070228_fix-OwnsOne-Issue")]
+    partial class fixOwnsOneIssue
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,18 @@ namespace App.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -86,7 +98,9 @@ namespace App.Persistence.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("CurrencyCode")
-                                .HasColumnType("nvarchar(200)")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("nvarchar(3)")
                                 .HasColumnName("CurrencyCode");
 
                             b1.HasKey("AccountId");
@@ -97,7 +111,8 @@ namespace App.Persistence.Migrations
                                 .HasForeignKey("AccountId");
                         });
 
-                    b.Navigation("Currency");
+                    b.Navigation("Currency")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

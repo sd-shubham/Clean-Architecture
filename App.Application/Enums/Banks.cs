@@ -10,5 +10,6 @@ namespace App.Application.Enums
     {
         // register all banks 
         ICICI,
+        SBI
     }
 }

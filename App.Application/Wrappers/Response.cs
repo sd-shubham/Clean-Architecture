@@ -5,13 +5,13 @@ namespace App.Application
     public class Response<T>
     {
         public Response() { }
-        public Response(string message, HttpStatusCode statusCode)
+        public Response(string errorMessage, HttpStatusCode statusCode)
         {
             this.IsSuccess = false;
-            Errors = new List<string> { message };
+            Errors = new List<string> { errorMessage };
             StatusCode = statusCode;
         }
-        public Response(T data, string message = "success", HttpStatusCode statusCode = HttpStatusCode.OK)
+        public Response(T data,HttpStatusCode statusCode = HttpStatusCode.OK, string message = "success")
         {
             IsSuccess = true;
             Result = data;

@@ -11,10 +11,11 @@ namespace App.Api.Controllers
         [HttpGet]
         public async Task<IActionResult>Get()
             =>Ok(await Mediator.Send(new GetAllUserQuery()));
+
         [HttpGet("{id}")]
         public async Task<IActionResult>GetById(int id)
         {
-            return Ok(await Mediator.Send(new GetUserById { Id = id }));
+            return Ok(await Mediator.Send(new GetUserById(id)));
         }
     }
 }

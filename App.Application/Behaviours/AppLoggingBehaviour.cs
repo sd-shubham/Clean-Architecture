@@ -19,8 +19,8 @@ namespace App.Application.Behaviours
             var requestGuid = Guid.NewGuid().ToString();
 
             var requestNameWithGuid = $"{requestName} [{requestGuid}]";
-            // this LogEx won't allocate any memory on heap.
-            _logger.LogEx(requestNameWithGuid,"[START] {requestNameWithGuid}");
+            // this Log won't allocate any memory on heap.
+            _logger.Log(requestNameWithGuid,"[START] {requestNameWithGuid}");
             TResponse response;
 
             var stopwatch = Stopwatch.StartNew();
@@ -28,11 +28,11 @@ namespace App.Application.Behaviours
             {
                 try
                 {
-                    _logger.LogEx(requestNameWithGuid, JsonSerializer.Serialize(request),"[PROPS] {requestNameWithGuid} {request}");
+                    _logger.Log(requestNameWithGuid, JsonSerializer.Serialize(request),"[PROPS] {requestNameWithGuid} {request}");
                 }
                 catch (NotSupportedException)
                 {
-                    _logger.LogEx(requestNameWithGuid,"[Serialization ERROR] {requestNameWithGuid} Could not serialize the request.");
+                    _logger.Log(requestNameWithGuid,"[Serialization ERROR] {requestNameWithGuid} Could not serialize the request.");
                 }
 
                 response = await next();
@@ -40,7 +40,7 @@ namespace App.Application.Behaviours
             finally
             {
                 stopwatch.Stop();
-                _logger.LogEx(
+                _logger.Log(
                      requestNameWithGuid, stopwatch.ElapsedMilliseconds,
                     "[END] {requestNameWithGuid}; Execution time={ElapsedMilliseconds}ms");
             }
