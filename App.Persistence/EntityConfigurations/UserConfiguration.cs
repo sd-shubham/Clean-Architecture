@@ -8,6 +8,7 @@ namespace App.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.Ignore(x => x.DomainEvents);
             builder.HasKey(x => x.Id);
             builder.Property(u => u.UserName).HasMaxLength(200)
                    .IsRequired();

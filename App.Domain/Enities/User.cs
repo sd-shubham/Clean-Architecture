@@ -1,4 +1,6 @@
-﻿using System;
+﻿using App.Domain.Common;
+using App.Domain.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Enities
 {
-    public class User: BaseEntity
+    public class User : BaseEntity, IHasDomainEvent
     {
         //public User()
         //{
@@ -19,6 +21,18 @@ namespace App.Domain.Enities
         public string UserName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-       // public ICollection<UserAddress> Addresses { get; set; }
+        // if save event state in db.
+       // private bool isDone;
+        //public bool Done
+        //{
+        //    get => isDone; set
+        //    {
+        //        if (value && !isDone)
+        //            DomainEvents.Add(new UserActionCompleteEvent(this));
+        //        isDone = value;
+        //    }
+        //}
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
+        // public ICollection<UserAddress> Addresses { get; set; }
     }
 }

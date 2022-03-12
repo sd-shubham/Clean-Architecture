@@ -2,6 +2,7 @@
 using App.Application.Helper;
 using App.Application.Interfaces;
 using App.Domain.Enities;
+using App.Domain.Events;
 using MediatR;
 using System.Net;
 
@@ -22,13 +23,15 @@ namespace App.Application.Services
             User user = new()
             {
                 UserName = request.UserName,
-               PasswordHash = password.hash,
-               PasswordSalt = password.salt,
+                PasswordHash = password.hash,
+                PasswordSalt = password.salt,
+               // Done = false
             };
-             _userRepository.Add(user);
-           bool isSave = await _userRepository.SaveChangesAsync(cancellationToken) > 0;
+            user.DomainEvents.Add(new UserCreateEvent(user));
+            _userRepository.Add(user);
+            bool isSave = await _userRepository.SaveChangesAsync(cancellationToken) > 0;
             if (!isSave) return Error<string>.BadRequest("failed to register user");
-          return new Response<string>("account created successfully",HttpStatusCode.Created, $"welcome {user.UserName}");
+            return new Response<string>("account created successfully", HttpStatusCode.Created, $"welcome {user.UserName}");
         }
     }
 }

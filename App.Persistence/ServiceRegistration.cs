@@ -15,24 +15,25 @@ namespace App.Persistence
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-           services.AddDbContext<AppDbContext>(options =>
-           {
-               options.UseInMemoryDatabase("InMemory")
-               .LogTo(Console.WriteLine, LogLevel.Information)
-               .EnableSensitiveDataLogging();
-           });
-           //services.AddDbContext<AppDbContext>(option =>
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("InMemory")
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging();
+            });
+            //services.AddDbContext<AppDbContext>(option =>
 
-           //    option.UseSqlServer(
-           //         configuration.GetConnectionString("AppDbContext"),
-           //         b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
-           //         ).LogTo(Console.WriteLine, LogLevel.Debug)
-           //          .EnableSensitiveDataLogging()
-           //         );
-           //services.AddDbContext<ForexTradingDbContext>(options => {
-           //    options.UseNpgsql("your connect string here");
-           //});
-           services.AddTransient<IDateTime, DateTimeService>();
+            //    option.UseSqlServer(
+            //         configuration.GetConnectionString("AppDbContext"),
+            //         b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+            //         ).LogTo(Console.WriteLine, LogLevel.Debug)
+            //          .EnableSensitiveDataLogging()
+            //         );
+            //services.AddDbContext<ForexTradingDbContext>(options => {
+            //    options.UseNpgsql("your connect string here");
+            //});
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddScoped<IDomainEventService, DomainEventService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
