@@ -8,9 +8,9 @@ using App.Persistence;
 
 namespace App.Api
 {
-    internal static class ServiceRegistrtion
+    internal static class ServiceRegistration
     {
-        public static void AddServices(this WebApplicationBuilder builder)
+        internal static void AddServices(this WebApplicationBuilder builder )
         {
             // Add services to the container.
             builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();

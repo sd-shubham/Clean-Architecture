@@ -4,9 +4,8 @@ namespace App.Api
 {
     internal static class RequestPipeLine
     {
-        public static void UseRequestPipeLine(this WebApplication app)
+        internal static void UseRequestPipeLine(this WebApplication app)
         {
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
