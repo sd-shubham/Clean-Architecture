@@ -1,5 +1,5 @@
-﻿using App.Application.Interfaces;
-using App.Domain;
+﻿using App.Application.Attributes;
+using App.Application.Interfaces;
 using App.Domain.Enities;
 using Microsoft.EntityFrameworkCore;
 
