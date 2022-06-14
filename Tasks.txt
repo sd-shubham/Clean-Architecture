@@ -1,0 +1,2 @@
+1- Add Azure Key Vault 
+2- Use Blob Storage for file storing
