@@ -26,8 +26,8 @@ namespace App.Api.Middlewares
                 var responseModel = new Response<string>(error?.Message ?? "somthing went wrong", HttpStatusCode.BadRequest);
                 response.StatusCode = error switch
                 {
-                    KeyNotFoundException => (int)HttpStatusCode.NotFound,
-                    AppException => (int)HttpStatusCode.BadRequest,
+                    NotFoundException => (int)HttpStatusCode.NotFound,
+                    BadRequestException => (int)HttpStatusCode.BadRequest,
                     _ => (int)HttpStatusCode.InternalServerError,
                 };
                 var result = JsonSerializer.Serialize(responseModel);

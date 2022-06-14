@@ -29,8 +29,9 @@ namespace App.Application.Services
             };
             user.DomainEvents.Add(new UserCreateEvent(user));
             _userRepository.Add(user);
-            bool isSave = await _userRepository.SaveChangesAsync(cancellationToken) > 0;
-            if (!isSave) return Error<string>.BadRequest("failed to register user");
+            var result = await _userRepository.SaveChangesAsync(cancellationToken)>0;
+            //if (!isSave) return Error<string>.BadRequest("failed to register user");
+            result.IsNotTrue($"failed to register user");
             return new Response<string>("account created successfully", HttpStatusCode.Created, $"welcome {user.UserName}");
         }
     }

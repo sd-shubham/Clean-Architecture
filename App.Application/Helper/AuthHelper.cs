@@ -20,6 +20,7 @@ namespace App.Application.Helper
         {
             using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
             return computedHash.SequenceEqual(passwordHash);
         }
 
