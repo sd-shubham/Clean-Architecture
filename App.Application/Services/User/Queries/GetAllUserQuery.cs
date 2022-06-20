@@ -8,17 +8,17 @@ namespace App.Application.Services
     public record GetAllUserQuery:IRequest<Response<IReadOnlyCollection<GetUserDto>>>;
     internal class GetAllUserHandler : IRequestHandler<GetAllUserQuery, Response<IReadOnlyCollection<GetUserDto>>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetAllUserHandler(IUserRepository userRepository, IMapper mapper)
+        public GetAllUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<Response<IReadOnlyCollection<GetUserDto>>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
         {
-            var users = _mapper.Map<IReadOnlyCollection<GetUserDto>>(await _userRepository.GetAsync(cancellationToken));
+            var users = _mapper.Map<IReadOnlyCollection<GetUserDto>>(await _unitOfWork.UserRepository.GetAsync(cancellationToken));
             return new Response<IReadOnlyCollection<GetUserDto>>(users);
         }
     }

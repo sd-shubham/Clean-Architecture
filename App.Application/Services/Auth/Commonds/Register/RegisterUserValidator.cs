@@ -5,10 +5,11 @@ namespace App.Application.Services
 {
     public class RegisterUserValidator: AbstractValidator<RegisterUserCommand>
     {
-        private readonly IUserRepository _userRepository;
-        public RegisterUserValidator(IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public RegisterUserValidator(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+
             RuleFor(p => p.UserName).NotEmpty().WithMessage("user name is required")
                     .NotNull()
                     .MustAsync(IsUserExists).WithMessage("user allready exists");
@@ -17,7 +18,7 @@ namespace App.Application.Services
         }
         public async Task<bool> IsUserExists(string userName,CancellationToken cancellationToken)
         {
-            return !await _userRepository.AnyAsync(x => x.UserName == userName, cancellationToken);
+            return !await _unitOfWork.UserRepository.AnyAsync(x => x.UserName == userName, cancellationToken);
         }
 
     }

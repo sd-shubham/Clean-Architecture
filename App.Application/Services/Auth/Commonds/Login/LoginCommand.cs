@@ -10,15 +10,14 @@ namespace App.Application.Services
     public record LoginCommand(string UserName, string Password) : IRequest<Response<AuthResponseModel>>;
     internal class LoginHanler : IRequestHandler<LoginCommand, Response<AuthResponseModel>>
     {
-        private readonly IUserRepository _userRepository;
-
-        public LoginHanler(IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public LoginHanler(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Response<AuthResponseModel>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
             user.IsNull($"invalid credentials ");
             AuthHelper.IsPasswordValid(request.Password, user.PasswordHash, user.PasswordSalt)
                       .IsNotTrue($"invalid credentials");

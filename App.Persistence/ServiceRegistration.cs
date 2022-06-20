@@ -35,17 +35,18 @@ namespace App.Persistence
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddScoped<IDomainEventService, DomainEventService>();
 
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+           // services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-            var assembly = Assembly.LoadFrom(
-                $"{Path.GetDirectoryName(typeof(AppDbContext).Assembly.Location)}\\App.Persistence.dll");
-            services.Scan(scan =>
-                scan.FromAssemblies(assembly)
-                    .AddClasses(classes => classes.WithAttribute<Injectable>(), true)
-                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime()
-                    );
+            //var assembly = Assembly.LoadFrom(
+            //    $"{Path.GetDirectoryName(typeof(AppDbContext).Assembly.Location)}\\App.Persistence.dll");
+            //services.Scan(scan =>
+            //    scan.FromAssemblies(assembly)
+            //        .AddClasses(classes => classes.WithAttribute<Injectable>(), true)
+            //        .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            //        .AsImplementedInterfaces()
+            //        .WithScopedLifetime()
+            //        );
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         }
     }

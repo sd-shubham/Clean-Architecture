@@ -11,11 +11,11 @@ namespace App.Application.Services
     public record RegisterUserCommand(string UserName, string Password) : IRequest<Response<string>>;
     internal class Handler : IRequestHandler<RegisterUserCommand, Response<string>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public Handler(IUserRepository userRepository)
+        public Handler(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Response<string>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
@@ -28,8 +28,8 @@ namespace App.Application.Services
                // Done = false
             };
             user.DomainEvents.Add(new UserCreateEvent(user));
-            _userRepository.Add(user);
-            var result = await _userRepository.SaveChangesAsync(cancellationToken)>0;
+            _unitOfWork.UserRepository.Add(user);
+            var result = await _unitOfWork.UserRepository.SaveChangesAsync(cancellationToken)>0;
             //if (!isSave) return Error<string>.BadRequest("failed to register user");
             result.IsNotTrue($"failed to register user");
             return new Response<string>("account created successfully", HttpStatusCode.Created, $"welcome {user.UserName}");
