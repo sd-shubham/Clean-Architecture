@@ -28,6 +28,7 @@ namespace App.Api.Middlewares
                 {
                     NotFoundException => (int)HttpStatusCode.NotFound,
                     BadRequestException => (int)HttpStatusCode.BadRequest,
+                    ArgumentsNullException => (int)HttpStatusCode.InternalServerError,
                     _ => (int)HttpStatusCode.InternalServerError,
                 };
                 var result = JsonSerializer.Serialize(responseModel);

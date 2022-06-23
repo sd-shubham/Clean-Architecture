@@ -3,7 +3,6 @@ using App.Application.Exceptions;
 using App.Application.Helper;
 using App.Application.Interfaces;
 using MediatR;
-using System.Net;
 
 namespace App.Application.Services
 {

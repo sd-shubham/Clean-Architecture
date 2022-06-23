@@ -6,26 +6,34 @@ namespace App.Application.Exceptions
 {
     internal static class ErrorGaurd
     {
-        public static void IsInvalid(this bool obj,
-           [InterpolatedStringHandlerArgument("obj")] ref GenericStringHandler<bool> message,
-           [CallerArgumentExpression("obj")] string paramName = "")
+        public static void IsInvalid(this bool condition, string message)
         {
-            if (obj)
-                throw new NotFoundException(message.ToString(), paramName);
+           HandleError(condition, $"{message}");
         }
-        public static void IsExists(this bool obj,
-           [InterpolatedStringHandlerArgument("obj")] ref GenericStringHandler<bool> message,
-           [CallerArgumentExpression("obj")] string paramName = "")
+        public static void IsExists(this bool condition, string message)
         {
-            if (obj)
-                throw new NotFoundException(message.ToString(), paramName);
+            HandleError(condition, $"{message}");
         }
-        public static void IsNull<T>(this T  obj,
-              [InterpolatedStringHandlerArgument("obj")] ref GenericStringHandler<T> message,
-              [CallerArgumentExpression("obj")] string paramName = "")
+        public static void IsNull<T>(this T obj, string message)
         {
-            if (obj is null)
-                throw new NotFoundException(message.ToString(), paramName);
+            HandleError((obj is null), $"{message}");
+        }
+        public static void NullOrEmpty(this string str, string message)
+        {
+            HandleError(string.IsNullOrEmpty(str),$"{message}",ExceptionType.ArgumentNull);
+        }
+
+        public static void HandleError(bool condition, 
+                            [InterpolatedStringHandlerArgument("condition")] ref StringHandler message,
+                            ExceptionType exceptionType = ExceptionType.NotFound,
+                               [CallerArgumentExpression("condition")] string paramName = ""
+                             )
+        {
+            var msg = message.ToString();
+            if (condition)
+            {
+                throw AppException.GetExceptionByType(exceptionType, msg);
+            }
         }
     }
 }

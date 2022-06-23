@@ -9,7 +9,7 @@ namespace App.Application.Helper
         internal StringHandler(int literalLength, int formattedCount,
                                           bool condition, out bool shouldAppend)
         {
-            if (condition)
+            if (!condition)
             {
                 _handler = default;
                 shouldAppend = false;
