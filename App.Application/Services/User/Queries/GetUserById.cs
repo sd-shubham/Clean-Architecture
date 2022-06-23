@@ -21,7 +21,6 @@ namespace App.Application.Services
         public async Task<Response<GetUserDto>> Handle(GetUserById request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(x => x.Id == request.Id,cancellationToken);
-            // if (user is null) return Error<GetUserDto>.NotFound();
             user.IsNull($"User does not exists");
             return new Response<GetUserDto>(_mapper.Map<GetUserDto>(user));
         }

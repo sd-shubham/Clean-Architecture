@@ -16,7 +16,7 @@ namespace App.Application.Interfaces
         Task<Entity> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression, CancellationToken cancellationToken = default);
         Task<Entity> SingleOrDefaultAsync(Expression<Func<Entity, bool>> expression,CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(Expression<Func<Entity, bool>> expression,CancellationToken cancellationToken= default);
-        Task<int> SaveChangesAsync(CancellationToken token = default);
+       // Task<int> SaveChangesAsync(CancellationToken token = default);
 
     }
 }

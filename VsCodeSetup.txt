@@ -1,0 +1,21 @@
+-- vs code set up & extension for c# & .Net (core)
+
+1- add C# extension (search for c# and you will find it (by microsoft))
+2- hide unnecessary code & foder => go to settings (ctrl + ,) serach for hide files 
+   add file or folder you want to hide (**/obj) or (**/bin)
+3- shortcuts --> ctrl + ship + p => this will show all commands search for keyboard shortcut
+   you will find all shortcut 
+4-  extensions --
+                1 - Roslynator (by Josef Pihrt)
+                2 - .net core test explorer (by Jun Han)
+                3 - auto using for c# (by fudge)
+                4 - c# namespace auto complete (by Adrian Wiczynski)c
+                5 - C# xml documention comment (by Keisuke Kato)
+                6 - nuget reverse package search (by jess Chadwick)
+                ##################################################
+                Not specific to c# or .net
+                
+                7 - code spell checker (by street side software)
+                8 - vscode-icons (by vscode icone team)
+                9 - path in intellisense (by christian kohler)
+               10 - editor config for vs code (by editorconfig)

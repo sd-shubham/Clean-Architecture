@@ -5,6 +5,9 @@ using App.Application.Behaviours;
 using App.Application.Interfaces;
 using App.Domain.Common;
 using App.Persistence;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace App.Api
 {
@@ -12,6 +15,19 @@ namespace App.Api
     {
         internal static void AddServices(this WebApplicationBuilder builder )
         {
+
+            // key vault set up
+
+            string kvUrl = builder.Configuration["KeyVaultConfig:KVUrl"];
+            string tenantId = builder.Configuration["KeyVaultConfig:TenantId"];
+            string clientId = builder.Configuration["KeyVaultConfig:ClientId"];
+            string clientSecret = "JIw8Q~nbVPiMsa2QQB0GOKP4LhQjnnSAiiW-ba6d";
+
+            var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+            var client = new SecretClient(new Uri(kvUrl), credential);
+            builder.Configuration.AddAzureKeyVault(client, new AzureKeyVaultConfigurationOptions());
+
+
             // Add services to the container.
             builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
             builder.Services.AddApplication();

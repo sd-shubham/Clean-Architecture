@@ -19,6 +19,11 @@ namespace App.Application.Services
         }
         public async Task<Response<string>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
+            (await _unitOfWork.UserRepository
+                              .AnyAsync(x => x.UserName == request.UserName, cancellationToken))
+                              .IsExists($"user already exits");
+                      
+                             
             var password = AuthHelper.CreatePassword(request.Password);
             User user = new()
             {
@@ -29,9 +34,9 @@ namespace App.Application.Services
             };
             user.DomainEvents.Add(new UserCreateEvent(user));
             _unitOfWork.UserRepository.Add(user);
-            var result = await _unitOfWork.UserRepository.SaveChangesAsync(cancellationToken)>0;
-            //if (!isSave) return Error<string>.BadRequest("failed to register user");
-            result.IsNotTrue($"failed to register user");
+            await Task.Delay(5000);
+            var result = await _unitOfWork.Complete(cancellationToken)< 1;
+            result.IsInvalid($"failed to register user");
             return new Response<string>("account created successfully", HttpStatusCode.Created, $"welcome {user.UserName}");
         }
     }

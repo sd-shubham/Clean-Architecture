@@ -16,12 +16,12 @@ namespace App.Application.Helper
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return (hash, salt);
         }
-        public static bool IsPasswordValid(string password, byte[] passwordHash, byte[] passwordSalt)
+        public static bool IsPasswordInValid(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            return computedHash.SequenceEqual(passwordHash);
+            return !computedHash.SequenceEqual(passwordHash);
         }
 
         public static string GenerateJwtToken(AuthUser user)

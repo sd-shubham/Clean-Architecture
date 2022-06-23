@@ -12,7 +12,7 @@ namespace App.Application.Helper
            //ToDo - changes requires check other type as well.
            if(obj is bool val)
             {
-                if (val)
+                if (!val)
                 {
                     _handler = default;
                     shouldAppend = false;

@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Persistence", "App.Pers
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1FF16F55-1417-42F2-B812-378FCB40843F}"
 	ProjectSection(SolutionItems) = preProject
+		KeyVaultWithClientSecret.txt = KeyVaultWithClientSecret.txt
 		Tasks.txt = Tasks.txt
+		VsCodeSetup.txt = VsCodeSetup.txt
 	EndProjectSection
 EndProject
 Global

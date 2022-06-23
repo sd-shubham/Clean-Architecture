@@ -9,6 +9,7 @@ namespace App.Application.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        Task<int> Complete(CancellationToken token = default);
 
     }
 }

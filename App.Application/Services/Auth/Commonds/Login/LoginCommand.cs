@@ -19,10 +19,8 @@ namespace App.Application.Services
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
             user.IsNull($"invalid credentials ");
-            AuthHelper.IsPasswordValid(request.Password, user.PasswordHash, user.PasswordSalt)
-                      .IsNotTrue($"invalid credentials");
-            //if (!AuthHelper.IsPasswordValid(request.Password, user.PasswordHash, user.PasswordSalt))
-            //    return new Response<AuthResponseModel>("invalid credentials", HttpStatusCode.BadRequest);
+            AuthHelper.IsPasswordInValid(request.Password, user.PasswordHash, user.PasswordSalt)
+                      .IsInvalid($"invalid credentials");
             var authUser = new AuthUser(user.Id, user.UserName);
             var token = AuthHelper.GenerateJwtToken(authUser);
             AuthResponseModel response = new(user.UserName, token);

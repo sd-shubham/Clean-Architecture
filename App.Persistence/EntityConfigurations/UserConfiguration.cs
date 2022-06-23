@@ -12,12 +12,7 @@ namespace App.Persistence.EntityConfigurations
             builder.HasKey(x => x.Id);
             builder.Property(u => u.UserName).HasMaxLength(200)
                    .IsRequired();
-            // optional according to you requirment
-            builder.HasIndex(u => new
-            {
-                u.Id,
-                u.UserName
-            });
+            builder.HasIndex(u => u.UserName).IsUnique();
         }
     }
 }
