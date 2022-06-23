@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		VsCodeSetup.txt = VsCodeSetup.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiBenchMark", "ApiBenchMark\ApiBenchMark.csproj", "{E3D6F088-B36D-42C6-9D5B-86BFC3AE037B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{90F46CD9-A8AB-4A29-882B-E5306A6D9993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90F46CD9-A8AB-4A29-882B-E5306A6D9993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90F46CD9-A8AB-4A29-882B-E5306A6D9993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3D6F088-B36D-42C6-9D5B-86BFC3AE037B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D6F088-B36D-42C6-9D5B-86BFC3AE037B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D6F088-B36D-42C6-9D5B-86BFC3AE037B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D6F088-B36D-42C6-9D5B-86BFC3AE037B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

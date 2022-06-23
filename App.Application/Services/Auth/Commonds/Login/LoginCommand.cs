@@ -17,9 +17,9 @@ namespace App.Application.Services
         public async Task<Response<AuthResponseModel>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
-            user.IsNull($"invalid credentials ");
+            (user is null).IsTrue($"Invalid Credential");
             AuthHelper.IsPasswordInValid(request.Password, user.PasswordHash, user.PasswordSalt)
-                      .IsInvalid($"invalid credentials");
+                      .IsTrue($"invalid credentials");
             var authUser = new AuthUser(user.Id, user.UserName);
             var token = AuthHelper.GenerateJwtToken(authUser);
             AuthResponseModel response = new(user.UserName, token);

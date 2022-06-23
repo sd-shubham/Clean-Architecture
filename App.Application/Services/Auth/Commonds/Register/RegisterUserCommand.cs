@@ -35,8 +35,8 @@ namespace App.Application.Services
             user.DomainEvents.Add(new UserCreateEvent(user));
             _unitOfWork.UserRepository.Add(user);
             await Task.Delay(5000);
-            var result = await _unitOfWork.Complete(cancellationToken)< 1;
-            result.IsInvalid($"failed to register user");
+            var IsInvalid = await _unitOfWork.Complete(cancellationToken)< 1;
+            IsInvalid.IsTrue($"failed to register user");
             return new Response<string>("account created successfully", HttpStatusCode.Created, $"welcome {user.UserName}");
         }
     }
