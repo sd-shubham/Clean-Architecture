@@ -13,8 +13,8 @@ namespace App.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseExceptionHandler("/error");
             app.UseAuthentication();
             app.UseAuthorization();
 

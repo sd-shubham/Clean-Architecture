@@ -36,7 +36,7 @@ namespace App.Api
             builder.Services.AddTransient<IMailService, EmailService>();
             builder.Services.AddControllers(options =>
             {
-                options.Filters.Add(new FluentErrorValidationAttribute());
+               options.Filters.Add(new FluentErrorValidationAttribute());
             }).AddJsonOptions(option =>
             {
                 // adding datetime and timeonly json converte

@@ -25,6 +25,7 @@ namespace App.Persistence
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Account { get; set; }
+        public  DbSet<UserAddress>Address => Set<UserAddress>();
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entity in ChangeTracker.Entries<BaseEntity>())

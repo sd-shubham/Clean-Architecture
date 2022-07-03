@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Enities
 {
-    //public class UserAddress
-    //{
-    //    public int Id { get; set; }
-    //    [ForeignKey(nameof(User))]
-    //    public int UserID { get; set; }
-    //    public User User { get; set; }
-    //}
+    public class UserAddress
+    {
+        private UserAddress() { }
+        public int Id { get; private set; }
+        public int UserID { get; private set; }
+        public User User { get; private set; }
+        public string PinCode { get; private set; } // Todo need to change it to value object
+
+        public static UserAddress AddUserAddress(string pincode)
+        {
+            return new UserAddress
+            {
+                PinCode = pincode,
+            };
+        }
+    }
+
 }

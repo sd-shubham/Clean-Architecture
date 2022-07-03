@@ -13,19 +13,13 @@ namespace App.Application.Behaviours
                 var errors = context.ModelState.Values.Where(x => x.Errors.Count > 0)
                              .SelectMany(v => v.Errors)
                              .Select(e => e.ErrorMessage).ToList();
-                var response = new Response<string>
+                var problem = new ProblemDetails
                 {
-                    Errors = errors,
-                    IsSuccess = false,
-                    Result = null,
-                    StatusCode= HttpStatusCode.BadRequest
-                    
-                };
-                context.Result = new JsonResult(response)
-                {
-                    StatusCode = (int)HttpStatusCode.BadRequest
-                };
+                    Status = (int)HttpStatusCode.BadRequest
 
+                };
+                problem.Extensions.Add("Errors",errors);
+                context.Result = new JsonResult(problem);
             }
         }
     }

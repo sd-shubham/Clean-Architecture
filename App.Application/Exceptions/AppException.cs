@@ -1,49 +1,55 @@
 ﻿using System.Globalization;
+using System.Net;
 
 namespace App.Application.Exceptions
 {
     public abstract class AppException: Exception
     {
-        public AppException() : base() { }
-        public AppException(string message) : base(message) { }
-        public AppException(string message, params object[] arg)
+        public  HttpStatusCode StatusCode { get; } 
+        public AppException(HttpStatusCode statusCode) : base() {
+            StatusCode = statusCode;
+        }
+        public AppException(string message, HttpStatusCode statusCode) : base(message) {
+            StatusCode = statusCode;
+        }
+        public AppException(string message, HttpStatusCode statusCode, params object[] arg)
                : base(string.Format(CultureInfo.CurrentCulture,message,arg))
         {
-
+            StatusCode = statusCode;
         }
         public static AppException GetExceptionByType(ExceptionType type, string message)
         {
            return type switch
             {
-                ExceptionType.NotFound => new NotFoundException(message),
-                ExceptionType.ArgumentNull => new ArgumentsNullException(message),
-                _ => new NotFoundException(message),
+                ExceptionType.NotFound => new NotFoundException(message, HttpStatusCode.NotFound),
+                ExceptionType.ArgumentNull => new ArgumentsNullException(message,HttpStatusCode.InternalServerError),
+                _ => new NotFoundException(message, HttpStatusCode.NotFound),
             };
         }
     }
     public class NotFoundException: AppException
     {
-        public NotFoundException()
+        public NotFoundException(HttpStatusCode statusCode): base(statusCode)
         {
 
         }
-        public NotFoundException(string message) : base(message) { }
-        public NotFoundException(string message, params object[] arg)
-               : base(string.Format(CultureInfo.CurrentCulture, message, arg)){}
+        public NotFoundException(string message, HttpStatusCode statusCode) : base(message, statusCode) { }
+        public NotFoundException(string message, HttpStatusCode statusCode, params object[] arg)
+               : base(string.Format(CultureInfo.CurrentCulture, message, arg),statusCode){}
     }
     public class BadRequestException : AppException
     {
-        public BadRequestException(){}
-        public BadRequestException(string message) : base(message) { }
-        public BadRequestException(string message, params object[] arg)
-               : base(string.Format(CultureInfo.CurrentCulture, message, arg)){}
+        public BadRequestException(HttpStatusCode statusCode):base(statusCode) {}
+        public BadRequestException(string message, HttpStatusCode statusCode) : base(message, statusCode) { }
+        public BadRequestException(string message, HttpStatusCode statusCode, params object[] arg)
+               : base(string.Format(CultureInfo.CurrentCulture, message, arg), statusCode){}
     }
     public class ArgumentsNullException : AppException
     {
-        public ArgumentsNullException() { }
-        public ArgumentsNullException(string message) : base(message) { }
-        public ArgumentsNullException(string message, params object[] arg)
-               : base(string.Format(CultureInfo.CurrentCulture, message, arg)) { }
+        public ArgumentsNullException(HttpStatusCode statusCode): base(statusCode) { }
+        public ArgumentsNullException(string message, HttpStatusCode statusCode) : base(message,statusCode) { }
+        public ArgumentsNullException(string message, HttpStatusCode statusCode, params object[] arg)
+               : base(string.Format(CultureInfo.CurrentCulture, message, arg), statusCode) { }
     }
     public enum ExceptionType
     {

@@ -15,11 +15,7 @@ namespace App.Persistence.Repositories
         }
         public override async Task<IReadOnlyCollection<User>> GetAsync(CancellationToken cancellationToken)
         {
-            var Users = await _dbContext.Users.Select(x => new User
-            {
-                Id = x.Id,
-                UserName = x.UserName
-            }).AsNoTracking().ToListAsync(cancellationToken);
+            var Users = await _dbContext.Users.Select(x=>User.SelectUser(x)).AsNoTracking().ToListAsync(cancellationToken);
             return Users;
 
         }
