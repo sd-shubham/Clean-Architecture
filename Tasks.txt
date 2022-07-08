@@ -2,3 +2,5 @@
 2- Use Blob Storage for file storing -- will do later
 3- better exception handling.
 4- validate domain model.
+5- Azure AD for Auth -- Done (check for token expire and refrece token).
+6- update benchmark with proper method.

@@ -5,15 +5,14 @@ using System.Reflection;
 using FluentValidation.AspNetCore;
 using App.Application.Helper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Web;
 
 namespace App.Application
 {
    public static class ServiceRegistration
     {
-        public static void AddApplication(this IServiceCollection service)
+        public static void AddApplication(this IServiceCollection service, IConfiguration config )
         {
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
             service.AddMediatR(Assembly.GetExecutingAssembly());
@@ -26,21 +25,13 @@ namespace App.Application
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            //service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            service.AddScoped(typeof(IPipelineBehavior<,>),typeof(AppLoggingBehaviour<,>));
-            service.AddAuthentication(option =>
-            {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new()
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your secure key that should be much longer"))
-                };
-            });
+           // service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            service.AddScoped(typeof(IPipelineBehavior<,>), typeof(AppLoggingBehaviour<,>));
+
+            //  Azure AD setup
+            service.AddMicrosoftIdentityWebAppAuthentication(config);
+            service.AddAuthentication();
+            service.AddAuthorization();
         }
     }
 }

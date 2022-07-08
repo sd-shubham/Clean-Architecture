@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
 {
+    //todo - remove this controller since we are using Azure Ad for auth.
     [ApiController]
     [Route("api/auth")]
     public class AuthController : BaseController
