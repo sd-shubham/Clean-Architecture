@@ -8,7 +8,9 @@ using App.Persistence;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
+using System.Text.Json.Serialization;
 
 namespace App.Api
 {
@@ -26,7 +28,8 @@ namespace App.Api
 
             var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
             var client = new SecretClient(new Uri(kvUrl), credential);
-            builder.Configuration.AddAzureKeyVault(client, new AzureKeyVaultConfigurationOptions());
+            // commented for  now
+          //  builder.Configuration.AddAzureKeyVault(client, new AzureKeyVaultConfigurationOptions());
 
             // Add services to the container.
             builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
@@ -43,11 +46,15 @@ namespace App.Api
                 // not supported by default.
                 option.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                 option.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+                option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
             var mailConfig = builder.Configuration.GetSection("MailSettings");
             builder.Services.Configure<MailSettings>(mailConfig);
 
             builder.Services.AddMicrosoftIdentityWebApiAuthentication(builder.Configuration);
+
+            // Adding Feature flag
+            builder.Services.AddFeatureManagement();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

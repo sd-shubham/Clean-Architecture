@@ -1,7 +1,5 @@
 ﻿using App.Application.Exceptions;
 using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

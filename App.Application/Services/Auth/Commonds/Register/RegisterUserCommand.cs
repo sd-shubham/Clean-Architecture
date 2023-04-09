@@ -9,6 +9,7 @@ using System.Net;
 
 namespace App.Application.Services
 {
+    // we can move registercommand to diffrent folder
     public record RegisterUserCommand(string UserName, string Password, UserAddressDto UserAddress) : IRequest<string>;
     internal class Handler : IRequestHandler<RegisterUserCommand, string>
     {
